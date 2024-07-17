@@ -49,6 +49,22 @@ async def Input_Expansion_API_Call(API, backend_model, conversation, username, b
     except Exception as e:
         print(e)
         return None
+        
+async def Domain_Selection_API_Call(API, backend_model, conversation, username, bot_name):
+    try:
+        data = {
+            "model": model,
+            "messages": conversation
+        }
+
+        loop = asyncio.get_event_loop()
+        completion = await loop.run_in_executor(None, create_completion, data)
+        
+        assistant_message = completion.choices[0].message.content.strip()
+        return assistant_message
+    except Exception as e:
+        print(e)
+        return None
 
 async def Inner_Monologue_API_Call(API, backend_model, conversation, username, bot_name):
     try:

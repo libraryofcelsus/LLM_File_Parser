@@ -91,6 +91,42 @@ async def Input_Expansion_API_Call(API, backend_model, prompt, username, bot_nam
         traceback.print_exc()
         return None
         
+async def Domain_Selection_API_Call(API, backend_model, prompt, username, bot_name):
+    try:
+        with open('./Settings.json', 'r', encoding='utf-8') as f:
+            settings = json.load(f)
+        HOST = settings.get('HOST_KoboldCpp', 'http://127.0.0.1:5001')
+        url = f"{HOST}/v1/chat/completions"
+
+        headers = {
+            "Content-Type": "application/json"
+        }
+
+        data = {
+            "mode": "instruct",
+            "instruction_template": backend_model,
+            "messages": prompt,
+            "max_tokens": 100
+        }
+
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, headers=headers, json=data, ssl=False) as response:
+                if response.status == 200:
+                    try:
+                        response_json = await response.json()
+                        assistant_message = response_json['choices'][0]['message']['content']
+                        return assistant_message
+                    except ValueError:
+                        print("Response content is not valid JSON:", await response.text())
+                        return None
+                else:
+                    print("Failed to get a valid response:", response.status)
+                    return None
+
+    except Exception as e:
+        traceback.print_exc()
+        return None
+        
 
 async def Inner_Monologue_API_Call(API, backend_model, prompt, username, bot_name):
     try:

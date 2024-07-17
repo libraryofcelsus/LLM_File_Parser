@@ -1,5 +1,5 @@
 # LLM File Parser
-Version 0.01 of LLM File Parser by [LibraryofCelsus.com](https://www.libraryofcelsus.com)  
+Version 0.02 of LLM File Parser by [LibraryofCelsus.com](https://www.libraryofcelsus.com)  
   
 [Installation Guide](#installation-guide)  
 [Skip to Changelog](#changelog)  
@@ -7,6 +7,8 @@ Version 0.01 of LLM File Parser by [LibraryofCelsus.com](https://www.libraryofce
 
 ------
 **Recent Changes**
+
+• 07/17 Added Knowledge Domains as seperate index so existing domains can be searched with vectors.
 
 • 07/12 First Release
 
@@ -17,6 +19,11 @@ Version 0.01 of LLM File Parser by [LibraryofCelsus.com](https://www.libraryofce
 This project is part of my larger Aetherius project and is designed to streamline the process of transforming unstructured data into structured databases and datasets. The program falls under AutoML and uses various LLM techniques to scan, chunk, and summarize unstructured documents, transforming them into structured data with minimal user input.  
 
 Current supported file types: .epub, .pdf, .txt, .png, .jpg, .jpeg, .mp4, .mkv, .flv, and .av  
+
+Chatbots using this format:   
+- https://github.com/libraryofcelsus/Hierarchical_RAG_Chatbot
+
+This project serves as the document uploader for: https://github.com/libraryofcelsus/Advanced_RAG_Chatbot
 
 Main Ai Assistant Github: https://github.com/libraryofcelsus/Aetherius_AI_Assistant  
 
@@ -43,6 +50,10 @@ Made by: https://github.com/libraryofcelsus
 
 
 # Changelog: 
+**0.02** 
+
+• Added Knowledge Domains as seperate index so existing domains can be searched with vectors. 
+
 **0.01** 
 
 • First Release

@@ -100,5 +100,42 @@ def upload_document(collection_name, bot_name, user_id, text, domain, filename, 
     
     client.upsert(collection_name=collection_name,
                   points=[PointStruct(id=unique_id, vector=vector, payload=metadata)])  
+                  
+                  
+                  
+    vector1 = embeddings(model, domain)
+    try:
+        hits = client.search(
+            collection_name=f"BOT_NAME_{bot_name}_Domains",
+            query_vector=vector1,
+            query_filter=Filter(
+                must=[
+                    FieldCondition(
+                        key="user",
+                        match=MatchValue(value=f"{user_id}")
+                    )
+                ]
+            ),
+            limit=15
+        )
+        domain_search = [hit.payload['domain'] for hit in hits]
 
+    except Exception as e:
+        if "Not found: Collection" in str(e):
+            domain_search = []
+            search1 = "No Collection"
+        else:
+            print(f"\nAn unexpected error occurred: {str(e)}")
+            search1 = "No Collection"
 
+    if domain not in domain_search:
+        collection_name2 = f"{collection_name}_Domains"
+        initialize_collection(client, collection_name2, embed_size)
+        vector1 = embeddings(model, domain)
+        metadata = {
+            'bot': bot_name,
+            'user': user_id,
+            'domain': domain
+        }
+        client.upsert(collection_name=f"{collection_name}_Domains",
+                      points=[PointStruct(id=unique_id, vector=vector1, payload=metadata)])
